@@ -248,22 +248,84 @@ letters.forEach(letter => {
         if (letter.classList.contains("used"))
             return;
 
+        // Clear any slot selection
         slots.forEach(slot =>
             slot.classList.remove("selected")
         );
 
+        // Clear any letter selection
         letters.forEach(l =>
             l.classList.remove("selected")
         );
 
+        // =====================================================
+        // If a slot is selected, place the letter into it
+        // =====================================================
+        if (selectedSlot) {
+            const slot = selectedSlot;
+            
+            // Check if the slot has a number (empty)
+            const isNumber = slot.textContent === "1" || slot.textContent === "2" || 
+                slot.textContent === "3" || slot.textContent === "4" || slot.textContent === "5" || 
+                slot.textContent === "6" || slot.textContent === "7";
+            
+            // Check if the slot has a letter
+            const isLetterSlot = slot.textContent !== "?" && !isNumber;
+            
+            if (isNumber) {
+                // Empty slot - place letter
+                saveState();
+                slot.textContent = letter.dataset.letter;
+                slot.classList.add("filled");
+                letter.classList.add("used");
+                letter.style.visibility = "hidden";
+                clearSelections();
+                updateMissingLetters();
+                return;
+            } else if (isLetterSlot) {
+                // Slot has a letter - replace it
+                saveState();
+                
+                // Get the letter currently in the slot
+                const currentLetter = slot.textContent;
+                
+                // Find the letter element on the right side that matches
+                let currentLetterElement = null;
+                letters.forEach(l => {
+                    if (l.dataset.letter === currentLetter && l.classList.contains("used")) {
+                        currentLetterElement = l;
+                    }
+                });
+                
+                // Put the current letter back on the right side
+                if (currentLetterElement) {
+                    currentLetterElement.classList.remove("used");
+                    currentLetterElement.style.visibility = "visible";
+                }
+                
+                // Place the selected letter into the slot
+                slot.textContent = letter.dataset.letter;
+                slot.classList.add("filled");
+                
+                // Hide the selected letter
+                letter.classList.add("used");
+                letter.style.visibility = "hidden";
+                
+                clearSelections();
+                updateMissingLetters();
+                return;
+            }
+        }
+        
+        // If no slot selected, just select the letter
         letter.classList.add("selected");
-
         selectedLetter = letter;
         selectedSlot = null;
 
     });
 
 });
+
 // ------------------------------------------------------
 // SLOT CLICK
 // ------------------------------------------------------
@@ -272,129 +334,161 @@ slots.forEach(slot => {
 
     slot.addEventListener("click", () => {
 
-            // =====================================================
-            // CASE 1: Place letter into EMPTY slot
-            // =====================================================
-            if (selectedLetter && (slot.textContent === "?" || slot.textContent === "1" || slot.textContent === "2" || 
-                slot.textContent === "3" || slot.textContent === "4" || slot.textContent === "5" || 
-                slot.textContent === "6" || slot.textContent === "7")) {
+        // Helper function to check if text is a number (1-7)
+        function isNumber(text) {
+            return text === "1" || text === "2" || text === "3" || text === "4" || 
+                   text === "5" || text === "6" || text === "7";
+        }
+
+        // Helper function to check if text is a letter
+        function isLetter(text) {
+            return text !== "?" && !isNumber(text);
+        }
+
+        const slotHasNumber = isNumber(slot.textContent);
+        const slotHasLetter = isLetter(slot.textContent);
+
+        // =====================================================
+        // If a right-side letter is selected, place it into this slot
+        // =====================================================
+        if (selectedLetter) {
+            const letter = selectedLetter;
+            
+            if (slotHasNumber) {
+                // Empty slot - place letter
                 saveState();
-                slot.textContent = selectedLetter.dataset.letter;
+                slot.textContent = letter.dataset.letter;
                 slot.classList.add("filled");
-                selectedLetter.classList.add("used");
-                selectedLetter.style.visibility = "hidden";
+                letter.classList.add("used");
+                letter.style.visibility = "hidden";
+                clearSelections();
+                updateMissingLetters();
+                return;
+            } else if (slotHasLetter) {
+                // Slot has a letter - replace it
+                saveState();
+                
+                // Get the letter currently in the slot
+                const currentLetter = slot.textContent;
+                
+                // Find the letter element on the right side that matches
+                let currentLetterElement = null;
+                letters.forEach(l => {
+                    if (l.dataset.letter === currentLetter && l.classList.contains("used")) {
+                        currentLetterElement = l;
+                    }
+                });
+                
+                // Put the current letter back on the right side
+                if (currentLetterElement) {
+                    currentLetterElement.classList.remove("used");
+                    currentLetterElement.style.visibility = "visible";
+                }
+                
+                // Place the selected letter into the slot
+                slot.textContent = letter.dataset.letter;
+                slot.classList.add("filled");
+                
+                // Hide the selected letter
+                letter.classList.add("used");
+                letter.style.visibility = "hidden";
+                
                 clearSelections();
                 updateMissingLetters();
                 return;
             }
-
-        // =====================================================
-        // CASE 2: Replace letter in FILLED slot with selected letter
-        // =====================================================
-        if (selectedLetter && slot.textContent !== "?") {
-            saveState();
-            
-            // Get the letter currently in the slot
-            const currentLetter = slot.textContent;
-            
-            // Find the letter element on the right side that matches
-            let currentLetterElement = null;
-            letters.forEach(letter => {
-                if (letter.dataset.letter === currentLetter && letter.classList.contains("used")) {
-                    currentLetterElement = letter;
-                }
-            });
-            
-            // Put the current letter back on the right side
-            if (currentLetterElement) {
-                currentLetterElement.classList.remove("used");
-                currentLetterElement.style.visibility = "visible";
-            }
-            
-            // Place the selected letter into the slot
-            slot.textContent = selectedLetter.dataset.letter;
-            slot.classList.add("filled");
-            
-            // Hide the selected letter
-            selectedLetter.classList.add("used");
-            selectedLetter.style.visibility = "hidden";
             
             clearSelections();
-            updateMissingLetters();
             return;
         }
 
-// =====================================================
-        // CASE 3: Select or Swap filled slots (no letter selected)
         // =====================================================
-        if (!selectedLetter && slot.textContent !== "?") {
+        // No right-side letter selected - handle slot-to-slot actions
+        // =====================================================
+
+        // If we already have a selected slot
+        if (selectedSlot) {
+            const selectedHasLetter = isLetter(selectedSlot.textContent);
+            const selectedHasNumber = isNumber(selectedSlot.textContent);
             
-            // 3a: No slot selected yet -> select this one
-            if (!selectedSlot) {
+            // CASE: Selected has letter, clicked has number -> MOVE letter to number slot
+            if (selectedHasLetter && slotHasNumber) {
+                saveState();
+                // Move letter to the number slot
+                slot.textContent = selectedSlot.textContent;
+                slot.classList.add("filled");
+                // Put number back where the letter was
+                const slotIndex = Array.from(slots).indexOf(selectedSlot);
+                selectedSlot.textContent = slotIndex + 1;
+                selectedSlot.classList.remove("filled");
                 slots.forEach(s => s.classList.remove("selected"));
-                slot.classList.add("selected");
-                selectedSlot = slot;
+                selectedSlot = null;
+                updateMissingLetters();
                 return;
             }
             
-            // 3b: Clicking the same selected slot -> deselect it
+            // CASE: Selected has number, clicked has letter -> MOVE letter to number slot (reverse)
+            if (selectedHasNumber && slotHasLetter) {
+                saveState();
+                // Move letter to the number slot (selected slot)
+                selectedSlot.textContent = slot.textContent;
+                selectedSlot.classList.add("filled");
+                // Put number back where the letter was
+                const slotIndex = Array.from(slots).indexOf(slot);
+                slot.textContent = slotIndex + 1;
+                slot.classList.remove("filled");
+                slots.forEach(s => s.classList.remove("selected"));
+                selectedSlot = null;
+                updateMissingLetters();
+                return;
+            }
+            
+            // CASE: Both have letters -> SWAP
+            if (selectedHasLetter && slotHasLetter) {
+                saveState();
+                const temp = selectedSlot.textContent;
+                selectedSlot.textContent = slot.textContent;
+                slot.textContent = temp;
+                slots.forEach(s => s.classList.remove("selected"));
+                selectedSlot = null;
+                updateMissingLetters();
+                return;
+            }
+            
+            // CASE: Both have numbers -> do nothing, clear selection
+            if (selectedHasNumber && slotHasNumber) {
+                slots.forEach(s => s.classList.remove("selected"));
+                selectedSlot = null;
+                return;
+            }
+            
+            // If clicking the same selected slot -> deselect it
             if (selectedSlot === slot) {
                 slot.classList.remove("selected");
                 selectedSlot = null;
                 return;
             }
-            
-            // 3c: Clicking a different filled slot -> SWAP
-            if (selectedSlot && selectedSlot !== slot) {
-                saveState();
-                
-                // Get the values
-                const val1 = selectedSlot.textContent;
-                const val2 = slot.textContent;
-                
-                // Check if val1 is a number (1-7) or a letter
-                const isNumber1 = ["1","2","3","4","5","6","7"].includes(val1);
-                const isNumber2 = ["1","2","3","4","5","6","7"].includes(val2);
-                
-                // If both are letters, swap normally
-                if (!isNumber1 && !isNumber2) {
-                    // Both are letters - swap
-                    selectedSlot.textContent = val2;
-                    slot.textContent = val1;
-                } else if (isNumber1 && !isNumber2) {
-                    // Slot 1 has number, Slot 2 has letter
-                    // Move letter to slot 1, keep number in slot 2
-                    selectedSlot.textContent = val2;
-                    slot.textContent = val1;
-                } else if (!isNumber1 && isNumber2) {
-                    // Slot 1 has letter, Slot 2 has number
-                    // Move letter to slot 2, keep number in slot 1
-                    selectedSlot.textContent = val2;
-                    slot.textContent = val1;
-                } else {
-                    // Both are numbers - swap them
-                    selectedSlot.textContent = val2;
-                    slot.textContent = val1;
-                }
-                
-                // Clear selections
-                slots.forEach(s => s.classList.remove("selected"));
-                selectedSlot = null;
-                
-                updateMissingLetters();
-                return;
-            }
         }
 
-            // =====================================================
-            // CASE 4: Clicking empty slot with nothing selected
-            // =====================================================
-            if ((slot.textContent === "?" || slot.textContent === "1" || slot.textContent === "2" || 
-                slot.textContent === "3" || slot.textContent === "4" || slot.textContent === "5" || 
-                slot.textContent === "6" || slot.textContent === "7") && !selectedLetter && !selectedSlot) {
-                // Do nothing
-                return;
-            }
+        // =====================================================
+        // No slot selected yet - select this slot
+        // =====================================================
+        
+        // Clicking a number (empty slot) - select it
+        if (slotHasNumber) {
+            slots.forEach(s => s.classList.remove("selected"));
+            slot.classList.add("selected");
+            selectedSlot = slot;
+            return;
+        }
+        
+        // Clicking a slot with a letter - select it
+        if (slotHasLetter) {
+            slots.forEach(s => s.classList.remove("selected"));
+            slot.classList.add("selected");
+            selectedSlot = slot;
+            return;
+        }
 
     });
 
@@ -475,32 +569,33 @@ function autoFillBoard() {
 
     let index = 0;
 
-        slots.forEach(slot => {
+    slots.forEach(slot => {
 
-            if ((slot.textContent === "?" || slot.textContent === "1" || slot.textContent === "2" || 
-                slot.textContent === "3" || slot.textContent === "4" || slot.textContent === "5" || 
-                slot.textContent === "6" || slot.textContent === "7") && index < remainingLetters.length) {
+        // Check if slot is empty (has a number or ?)
+        const isEmpty = slot.textContent === "?" || slot.textContent === "1" || slot.textContent === "2" || 
+            slot.textContent === "3" || slot.textContent === "4" || slot.textContent === "5" || 
+            slot.textContent === "6" || slot.textContent === "7";
 
-                const letter = remainingLetters[index];
+        if (isEmpty && index < remainingLetters.length) {
 
-                slot.textContent = letter.dataset.letter;
+            const letter = remainingLetters[index];
 
-                slot.classList.add("filled");
+            slot.textContent = letter.dataset.letter;
+            slot.classList.add("filled");
 
-                letter.classList.add("used");
-                letter.style.visibility = "hidden";
+            letter.classList.add("used");
+            letter.style.visibility = "hidden";
 
-                index++;
+            index++;
 
-            }
+        }
 
-        });
+    });
 
     clearSelections();
     updateMissingLetters();
 
 }
-
 // ======================================================
 // UNDO BUTTON - FACTUAL (Clear Last Edited Input)
 // ======================================================
