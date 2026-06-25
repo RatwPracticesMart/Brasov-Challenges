@@ -1048,6 +1048,130 @@ textarea{
 }
 
 /* ======================================================
+   FACTUAL - Mobile Input Height Increase
+   ====================================================== */
+
+@media (max-width: 600px) {
+    /* Make inputs taller on mobile */
+    .target-number-card input {
+        height: 36px !important;
+        padding: 6px 10px !important;
+        font-size: 15px !important;
+    }
+    
+    .pairRow input {
+        height: 34px !important;
+        padding: 5px 8px !important;
+        font-size: 14px !important;
+    }
+    
+    .target-matches-card textarea {
+        height: 70px !important;
+        min-height: 60px !important;
+        font-size: 14px !important;
+        padding: 8px 10px !important;
+    }
+    
+    .selector {
+        height: 32px !important;
+        padding: 6px 14px !important;
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .target-number-card input {
+        height: 32px !important;
+        padding: 5px 8px !important;
+        font-size: 14px !important;
+    }
+    
+    .pairRow input {
+        height: 30px !important;
+        padding: 4px 8px !important;
+        font-size: 13px !important;
+    }
+    
+    .target-matches-card textarea {
+        height: 60px !important;
+        min-height: 50px !important;
+        font-size: 13px !important;
+        padding: 6px 8px !important;
+    }
+    
+    .selector {
+        height: 28px !important;
+        padding: 5px 10px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* ======================================================
+   FACTUAL - Mobile Input Width Increase
+   ====================================================== */
+
+@media (max-width: 600px) {
+    /* Make inputs wider on mobile */
+    .target-number-card input {
+        width: 70% !important;  /* Was 60% */
+        padding: 6px 12px !important;
+        height: 36px !important;
+        font-size: 15px !important;
+    }
+    
+    .pairRow input {
+        width: 65% !important;  /* Was 55% */
+        max-width: 140px !important;  /* Was 120px */
+        padding: 5px 10px !important;
+        height: 34px !important;
+        font-size: 14px !important;
+    }
+    
+    .target-matches-card textarea {
+        height: 70px !important;
+        min-height: 60px !important;
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+    }
+    
+    .selector {
+        height: 32px !important;
+        padding: 6px 16px !important;
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .target-number-card input {
+        width: 75% !important;
+        padding: 5px 10px !important;
+        height: 32px !important;
+        font-size: 14px !important;
+    }
+    
+    .pairRow input {
+        width: 70% !important;
+        max-width: 130px !important;
+        padding: 4px 10px !important;
+        height: 30px !important;
+        font-size: 13px !important;
+    }
+    
+    .target-matches-card textarea {
+        height: 60px !important;
+        min-height: 50px !important;
+        font-size: 13px !important;
+        padding: 6px 10px !important;
+    }
+    
+    .selector {
+        height: 28px !important;
+        padding: 5px 12px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* ======================================================
    CATHERINE'S GATE - Letter Boxes (Right Side)
    ====================================================== */
 
