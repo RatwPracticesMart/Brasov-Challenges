@@ -324,7 +324,7 @@ slots.forEach(slot => {
             return;
         }
 
-        // =====================================================
+// =====================================================
         // CASE 3: Select or Swap filled slots (no letter selected)
         // =====================================================
         if (!selectedLetter && slot.textContent !== "?") {
@@ -348,10 +348,34 @@ slots.forEach(slot => {
             if (selectedSlot && selectedSlot !== slot) {
                 saveState();
                 
-                // Swap the letters
-                const temp = selectedSlot.textContent;
-                selectedSlot.textContent = slot.textContent;
-                slot.textContent = temp;
+                // Get the values
+                const val1 = selectedSlot.textContent;
+                const val2 = slot.textContent;
+                
+                // Check if val1 is a number (1-7) or a letter
+                const isNumber1 = ["1","2","3","4","5","6","7"].includes(val1);
+                const isNumber2 = ["1","2","3","4","5","6","7"].includes(val2);
+                
+                // If both are letters, swap normally
+                if (!isNumber1 && !isNumber2) {
+                    // Both are letters - swap
+                    selectedSlot.textContent = val2;
+                    slot.textContent = val1;
+                } else if (isNumber1 && !isNumber2) {
+                    // Slot 1 has number, Slot 2 has letter
+                    // Move letter to slot 1, keep number in slot 2
+                    selectedSlot.textContent = val2;
+                    slot.textContent = val1;
+                } else if (!isNumber1 && isNumber2) {
+                    // Slot 1 has letter, Slot 2 has number
+                    // Move letter to slot 2, keep number in slot 1
+                    selectedSlot.textContent = val2;
+                    slot.textContent = val1;
+                } else {
+                    // Both are numbers - swap them
+                    selectedSlot.textContent = val2;
+                    slot.textContent = val1;
+                }
                 
                 // Clear selections
                 slots.forEach(s => s.classList.remove("selected"));
