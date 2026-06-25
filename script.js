@@ -177,12 +177,7 @@ function saveState() {
 
     slots.forEach(slot => {
 
-        // If slot has the number span, it's empty, save "?"
-        if (slot.querySelector('.slot-q')) {
-            state.slots.push("?");
-        } else {
-            state.slots.push(slot.textContent);
-        }
+        state.slots.push(slot.textContent);
 
     });
 
@@ -206,15 +201,12 @@ function restoreState(state) {
 
     slots.forEach((slot, index) => {
 
-        const value = state.slots[index];
+        slot.textContent = state.slots[index];
 
-        if (value === "?") {
-            slot.innerHTML = `<span class="slot-num">${index + 1}</span><span class="slot-q">?</span>`;
+        if (slot.textContent === "?")
             slot.classList.remove("filled");
-        } else {
-            slot.textContent = value;
+        else
             slot.classList.add("filled");
-        }
 
     });
 
@@ -273,19 +265,19 @@ slots.forEach(slot => {
 
     slot.addEventListener("click", () => {
 
-            // =====================================================
-            // CASE 1: Place letter into EMPTY slot
-            // =====================================================
-            if (selectedLetter && (slot.textContent === "?" || slot.querySelector('.slot-q'))) {
-                saveState();
-                slot.textContent = selectedLetter.dataset.letter;
-                slot.classList.add("filled");
-                selectedLetter.classList.add("used");
-                selectedLetter.style.visibility = "hidden";
-                clearSelections();
-                updateMissingLetters();
-                return;
-            }
+        // =====================================================
+        // CASE 1: Place letter into EMPTY slot
+        // =====================================================
+        if (selectedLetter && slot.textContent === "?") {
+            saveState();
+            slot.textContent = selectedLetter.dataset.letter;
+            slot.classList.add("filled");
+            selectedLetter.classList.add("used");
+            selectedLetter.style.visibility = "hidden";
+            clearSelections();
+            updateMissingLetters();
+            return;
+        }
 
         // =====================================================
         // CASE 2: Replace letter in FILLED slot with selected letter
@@ -361,13 +353,13 @@ slots.forEach(slot => {
             }
         }
 
-            // =====================================================
-            // CASE 4: Clicking empty slot with nothing selected
-            // =====================================================
-            if ((slot.textContent === "?" || slot.querySelector('.slot-q')) && !selectedLetter && !selectedSlot) {
-                // Do nothing
-                return;
-            }
+        // =====================================================
+        // CASE 4: Clicking empty slot with nothing selected
+        // =====================================================
+        if (slot.textContent === "?" && !selectedLetter && !selectedSlot) {
+            // Do nothing
+            return;
+        }
 
     });
 
@@ -393,9 +385,9 @@ function resetGateBoard() {
 
     clearSelections();
 
-    slots.forEach((slot, index) => {
+    slots.forEach(slot => {
 
-        slot.innerHTML = `<span class="slot-num">${index + 1}</span><span class="slot-q">?</span>`;
+        slot.textContent = "?";
         slot.classList.remove("filled");
         slot.classList.remove("selected");
 
