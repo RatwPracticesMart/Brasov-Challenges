@@ -987,8 +987,43 @@ function checkTargetMatches() {
 
     }
 
+        updatePairFound();
+
 }
 
+// ======================================================
+// FACTUAL - Pair Found Display
+// ======================================================
+
+function updatePairFound() {
+    const pairFoundValue = document.getElementById("pairFoundValue");
+    const pairFoundContainer = document.getElementById("pairFoundContainer");
+    const pairFoundLabel = document.getElementById("pairFoundLabel");
+    
+    // Get all pairs from target matches
+    const matchesText = matches.value;
+    
+    if (!matchesText || matchesText === "No pairs match target." || matchesText === "") {
+        pairFoundValue.textContent = "None";
+        pairFoundLabel.textContent = "No Pair";
+        pairFoundContainer.classList.remove("found"); // Red state
+        return;
+    }
+    
+    // Get the first pair found
+    const lines = matchesText.split("\n");
+    const firstPair = lines[0];
+    
+    if (firstPair) {
+        pairFoundValue.textContent = firstPair;
+        pairFoundLabel.textContent = "Pair Found!";
+        pairFoundContainer.classList.add("found"); // Green state
+    } else {
+        pairFoundValue.textContent = "None";
+        pairFoundLabel.textContent = "No Pair";
+        pairFoundContainer.classList.remove("found"); // Red state
+    }
+}
 
 // FIX 7: Fixed reset order - don't call solveFactual then clear
 // ======================================================
@@ -1040,6 +1075,8 @@ function resetAllFactualValues() {
         G: null,
         H: null
     };
+    updatePairFound();
+
 }
 
 // ======================================================

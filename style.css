@@ -1216,18 +1216,18 @@ textarea{
 }
 
 /* ======================================================
-   CATHERINE'S GATE - Empty Slots with ? mark
+   CATHERINE'S GATE - Empty Slots
    ====================================================== */
 
-/* Style for empty slots with ? mark */
+/* Empty slots with numbers - gray */
 .slot:not(.filled) {
-    color: #ff0000;  /* Red color for ? */
-    font-weight: bold;
+    color: rgba(0, 0, 0, 0.42) !important;  /* Gray for numbers */
+    font-weight: 700;
 }
 
-/* When slot is filled, use normal dark color */
+/* When slot is filled, use dark green */
 .slot.filled {
-    color: #333;  /* Dark color for letters */
+    color: #1b5e20;  /* Dark green for letters */
     border-color: #4caf50;
 }
 
@@ -1241,11 +1241,6 @@ textarea{
     color: #1b5e20;  /* Dark green */
 }
 
-/* Empty slots with numbers - gray */
-.slot:not(.filled) {
-    color: rgba(0, 0, 0, 0.42);  /* Medium gray for numbers */
-    font-weight: 700;
-}
 /* Right side letters - dark green with light yellow background */
 .rightColumn .letter {
     color: #1b5e20;  /* Dark green */
@@ -1380,3 +1375,74 @@ textarea{
     
 }
 
+/* ======================================================
+   FACTUAL - Pair Found Display
+   ====================================================== */
+
+.pairFoundContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    border: 2px solid #ef9a9a;
+    background: #ffebee;
+    transition: all 0.3s ease;
+}
+
+.pairFoundContainer.found {
+    border-color: #a5d6a7;
+    background: #e8f5e9;
+}
+
+.pairFoundLabel {
+    font-size: 13px;
+    font-weight: bold;
+    color: #cc7373;
+    transition: all 0.3s ease;
+}
+
+.pairFoundContainer.found .pairFoundLabel {
+    color: #a5d6a7;
+}
+
+.pairFoundValue {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 4px;
+    min-width: 60px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.7);
+    color: #cc7373;
+    transition: all 0.3s ease;
+}
+
+.pairFoundContainer.found .pairFoundLabel {
+    color: #0d3b0d;  /* Super dark green */
+    font-weight: 700;
+}
+
+.pairFoundContainer.found .pairFoundValue {
+    color: #0d3b0d;  /* Super dark green */
+    font-weight: 700;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .pairFoundContainer {
+        padding: 4px 10px;
+        margin-bottom: 8px;
+    }
+    
+    .pairFoundLabel {
+        font-size: 11px;
+    }
+    
+    .pairFoundValue {
+        font-size: 11px;
+        padding: 2px 8px;
+        min-width: 50px;
+    }
+}
