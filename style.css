@@ -1145,3 +1145,185 @@ textarea{
     visibility: hidden;
 }
 
+/* ======================================================
+   CATHERINE'S GATE - Button Colors (Matching Factual)
+   ====================================================== */
+
+/* Override the default button styles for Catherine's Gate */
+#gateScreen .buttonRow {
+    display: flex !important;
+    gap: 12px !important;
+    justify-content: center !important;
+    padding: 12px 0 !important;
+    margin-top: 8px !important;
+}
+
+#gateScreen .buttonRow button {
+    padding: 10px 24px !important;
+    border: 2px solid transparent !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    flex: 1 !important;
+    max-width: 180px !important;
+    font-family: inherit !important;
+    letter-spacing: 0.3px !important;
+    height: auto !important;
+}
+
+/* Auto Fill - Light Yellow (matching the letter boxes) */
+#autoFill {
+    background: #fff8e1 !important;
+    color: #1b5e20 !important;
+    border-color: #ffd54f !important;
+}
+
+#autoFill:hover {
+    background: #c0b288 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+}
+
+#autoFill:active {
+    transform: translateY(0px) !important;
+    box-shadow: none !important;
+}
+
+/* Undo - Light Green (same as Factual) */
+#undo {
+    background: #c8e6c9 !important;
+    color: #19521c !important;
+    border-color: #b3d1b4 !important;
+}
+
+#undo:hover {
+    background: #8eb18f !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+}
+
+#undo:active {
+    transform: translateY(0px) !important;
+    box-shadow: none !important;
+}
+
+/* Reset - Light Red (same as Factual) */
+#resetGate {
+    background: #ffcdd2 !important;
+    color: #b71c1c !important;
+    border-color: #ef9a9a !important;
+}
+
+#resetGate:hover {
+    background: #ef9a9a !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+}
+
+#resetGate:active {
+    transform: translateY(0px) !important;
+    box-shadow: none !important;
+}
+
+/* ======================================================
+   CATHERINE'S GATE - Mobile Button Adjustments
+   ====================================================== */
+
+@media (max-width: 600px) {
+    #gateScreen .buttonRow {
+        gap: 8px !important;
+        padding: 8px 0 !important;
+        flex-wrap: wrap !important;
+    }
+    
+    #gateScreen .buttonRow button {
+        flex: 1 !important;
+        min-width: 60px !important;
+        max-width: none !important;
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        border-radius: 8px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    #gateScreen .buttonRow button {
+        font-size: 11px !important;
+        padding: 6px 10px !important;
+        border-radius: 6px !important;
+    }
+}
+
+/* ======================================================
+   CATHERINE'S GATE - Slot Numbers
+   ====================================================== */
+
+.slot-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.slot-number {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.4);
+    min-width: 20px;
+    text-align: right;
+    user-select: none;
+}
+
+@media (max-width: 600px) {
+    .slot-number {
+        font-size: 13px;
+        min-width: 16px;
+    }
+    
+    .slot-wrapper {
+        gap: 6px;
+    }
+}
+
+@media (max-width: 400px) {
+    .slot-number {
+        font-size: 11px;
+        min-width: 14px;
+    }
+    
+    .slot-wrapper {
+        gap: 4px;
+    }
+}
+
+.slot {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slot-num {
+    position: absolute;
+    left: 15px;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.33);
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.slot-q {
+    font-size: 30px;
+    color: #e53935;
+    font-weight: 700;
+}
+
+.slot.filled .slot-num {
+    display: none;
+}
+
+.slot.filled .slot-q {
+    display: none;
+}
