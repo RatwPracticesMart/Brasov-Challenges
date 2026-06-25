@@ -206,8 +206,8 @@ function restoreState(state) {
         // Check if the value is a number (1-7) or empty indicator
         if (value === "?" || value === "1" || value === "2" || value === "3" || 
             value === "4" || value === "5" || value === "6" || value === "7") {
-            // It's empty - show the number
-            slot.textContent = index + 1;
+            // It's empty - show the number (reversed: 7 at top, 1 at bottom)
+            slot.textContent = 7 - index;
             slot.classList.remove("filled");
         } else {
             // It's a letter
@@ -236,7 +236,6 @@ function restoreState(state) {
     updateMissingLetters();
 
 }
-
 // ------------------------------------------------------
 // LETTER CLICK
 // ------------------------------------------------------
@@ -418,8 +417,9 @@ slots.forEach(slot => {
                 slot.textContent = selectedSlot.textContent;
                 slot.classList.add("filled");
                 // Put number back where the letter was
+                // Put number back where the letter was
                 const slotIndex = Array.from(slots).indexOf(selectedSlot);
-                selectedSlot.textContent = slotIndex + 1;
+                selectedSlot.textContent = 7 - slotIndex;
                 selectedSlot.classList.remove("filled");
                 slots.forEach(s => s.classList.remove("selected"));
                 selectedSlot = null;
@@ -435,7 +435,7 @@ slots.forEach(slot => {
                 selectedSlot.classList.add("filled");
                 // Put number back where the letter was
                 const slotIndex = Array.from(slots).indexOf(slot);
-                slot.textContent = slotIndex + 1;
+                slot.textContent = 7 - slotIndex;
                 slot.classList.remove("filled");
                 slots.forEach(s => s.classList.remove("selected"));
                 selectedSlot = null;
@@ -516,7 +516,7 @@ function resetGateBoard() {
 
     slots.forEach((slot, index) => {
 
-        slot.textContent = index + 1;
+        slot.textContent = 7 - index;
         slot.classList.remove("filled");
         slot.classList.remove("selected");
 
