@@ -201,12 +201,19 @@ function restoreState(state) {
 
     slots.forEach((slot, index) => {
 
-        slot.textContent = state.slots[index];
-
-        if (slot.textContent === "?")
+        const value = state.slots[index];
+        
+        // Check if the value is a number (1-7) or empty indicator
+        if (value === "?" || value === "1" || value === "2" || value === "3" || 
+            value === "4" || value === "5" || value === "6" || value === "7") {
+            // It's empty - show the number
+            slot.textContent = index + 1;
             slot.classList.remove("filled");
-        else
+        } else {
+            // It's a letter
+            slot.textContent = value;
             slot.classList.add("filled");
+        }
 
     });
 
@@ -265,19 +272,21 @@ slots.forEach(slot => {
 
     slot.addEventListener("click", () => {
 
-        // =====================================================
-        // CASE 1: Place letter into EMPTY slot
-        // =====================================================
-        if (selectedLetter && slot.textContent === "?") {
-            saveState();
-            slot.textContent = selectedLetter.dataset.letter;
-            slot.classList.add("filled");
-            selectedLetter.classList.add("used");
-            selectedLetter.style.visibility = "hidden";
-            clearSelections();
-            updateMissingLetters();
-            return;
-        }
+            // =====================================================
+            // CASE 1: Place letter into EMPTY slot
+            // =====================================================
+            if (selectedLetter && (slot.textContent === "?" || slot.textContent === "1" || slot.textContent === "2" || 
+                slot.textContent === "3" || slot.textContent === "4" || slot.textContent === "5" || 
+                slot.textContent === "6" || slot.textContent === "7")) {
+                saveState();
+                slot.textContent = selectedLetter.dataset.letter;
+                slot.classList.add("filled");
+                selectedLetter.classList.add("used");
+                selectedLetter.style.visibility = "hidden";
+                clearSelections();
+                updateMissingLetters();
+                return;
+            }
 
         // =====================================================
         // CASE 2: Replace letter in FILLED slot with selected letter
@@ -353,13 +362,15 @@ slots.forEach(slot => {
             }
         }
 
-        // =====================================================
-        // CASE 4: Clicking empty slot with nothing selected
-        // =====================================================
-        if (slot.textContent === "?" && !selectedLetter && !selectedSlot) {
-            // Do nothing
-            return;
-        }
+            // =====================================================
+            // CASE 4: Clicking empty slot with nothing selected
+            // =====================================================
+            if ((slot.textContent === "?" || slot.textContent === "1" || slot.textContent === "2" || 
+                slot.textContent === "3" || slot.textContent === "4" || slot.textContent === "5" || 
+                slot.textContent === "6" || slot.textContent === "7") && !selectedLetter && !selectedSlot) {
+                // Do nothing
+                return;
+            }
 
     });
 
@@ -385,9 +396,9 @@ function resetGateBoard() {
 
     clearSelections();
 
-    slots.forEach(slot => {
+    slots.forEach((slot, index) => {
 
-        slot.textContent = "?";
+        slot.textContent = index + 1;
         slot.classList.remove("filled");
         slot.classList.remove("selected");
 
@@ -440,24 +451,26 @@ function autoFillBoard() {
 
     let index = 0;
 
-    slots.forEach(slot => {
+        slots.forEach(slot => {
 
-        if (slot.textContent === "?" && index < remainingLetters.length) {
+            if ((slot.textContent === "?" || slot.textContent === "1" || slot.textContent === "2" || 
+                slot.textContent === "3" || slot.textContent === "4" || slot.textContent === "5" || 
+                slot.textContent === "6" || slot.textContent === "7") && index < remainingLetters.length) {
 
-            const letter = remainingLetters[index];
+                const letter = remainingLetters[index];
 
-            slot.textContent = letter.dataset.letter;
+                slot.textContent = letter.dataset.letter;
 
-            slot.classList.add("filled");
+                slot.classList.add("filled");
 
-            letter.classList.add("used");
-            letter.style.visibility = "hidden";
+                letter.classList.add("used");
+                letter.style.visibility = "hidden";
 
-            index++;
+                index++;
 
-        }
+            }
 
-    });
+        });
 
     clearSelections();
     updateMissingLetters();

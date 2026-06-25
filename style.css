@@ -1117,12 +1117,11 @@ textarea{
     color: #1b5e20;  /* Dark green */
 }
 
-/* Empty slots with ? - red */
+/* Empty slots with numbers - gray */
 .slot:not(.filled) {
-    color: #e53935;  /* Red for ? */
+    color: rgba(0, 0, 0, 0.42);  /* Medium gray for numbers */
     font-weight: 700;
 }
-
 /* Right side letters - dark green with light yellow background */
 .rightColumn .letter {
     color: #1b5e20;  /* Dark green */
@@ -1254,4 +1253,6 @@ textarea{
         padding: 6px 10px !important;
         border-radius: 6px !important;
     }
+    
 }
+
