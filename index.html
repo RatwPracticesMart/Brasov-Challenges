@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brasov, Romania Challenges</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================================================== -->
+<!-- MAIN MENU -->
+<!-- ===================================================== -->
+
+<section id="menuScreen">
+
+    <h1>Brasov, Romania Challenges</h1>
+
+    <img
+        id="flag"
+        src="assets/brasov-flag.png"
+        alt="Brasov Flag">
+
+    <button id="btnGate">
+        Catherine's Gate
+    </button>
+
+    <button id="btnFactual">
+        Factual
+    </button>
+
+</section>
+
+
+
+
+
+<!-- ===================================================== -->
+<!-- CATHERINE'S GATE -->
+<!-- ===================================================== -->
+
+<section id="gateScreen" class="hidden">
+
+    <header>
+
+        <button class="backButton">
+            ← Back
+        </button>
+
+        <h2>Catherine's Gate</h2>
+
+    </header>
+
+
+    <div class="pairContainer">
+
+        <div class="leftColumn">
+
+            <div class="slot" data-slot="0">?</div>
+            <div class="slot" data-slot="1">?</div>
+            <div class="slot" data-slot="2">?</div>
+            <div class="slot" data-slot="3">?</div>
+            <div class="slot" data-slot="4">?</div>
+            <div class="slot" data-slot="5">?</div>
+            <div class="slot" data-slot="6">?</div>
+
+        </div>
+
+
+        <div class="rightColumn">
+
+            <div class="letter" data-letter="A">A</div>
+            <div class="letter" data-letter="B">B</div>
+            <div class="letter" data-letter="C">C</div>
+            <div class="letter" data-letter="D">D</div>
+            <div class="letter" data-letter="E">E</div>
+            <div class="letter" data-letter="F">F</div>
+            <div class="letter" data-letter="G">G</div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="buttonRow">
+
+    <button id="autoFill">
+        Auto Fill
+    </button>
+
+    <button id="undo">
+        Undo
+    </button>
+
+    <button id="resetGate">
+        Reset
+    </button>
+
+</div>
+
+
+    <div class="missingLetters">
+
+        <h3>Missing Letters</h3>
+
+        <p id="missingText">
+
+            A, B, C, D, E, F, G
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+<!-- ===================================================== -->
+<!-- FACTUAL - Two Column Layout (Preserving All Elements) -->
+<!-- ===================================================== -->
+
+<section id="factualScreen" class="hidden">
+
+    <header>
+        <button class="backButton">← Back</button>
+        <h2>Factual</h2>
+    </header>
+
+    <!-- Target Number - Full width at top -->
+    <div class="card target-number-card">
+        <label>Target Number</label>
+        <input
+            id="target"
+            type="number"
+            inputmode="numeric"
+            placeholder="Enter target">
+    </div>
+
+    <!-- Two Column Grid Container -->
+    <div class="factual-grid">
+
+        <!-- LEFT COLUMN - Pair Inputs -->
+        <div class="factual-left">
+            <div class="card">
+                <h3>Pair Inputs</h3>
+
+                <div class="pairRow">
+                    <label>A + B</label>
+                    <input id="ab" type="number" inputmode="numeric">
+                </div>
+
+                <div class="pairRow">
+                    <label>A + C</label>
+                    <input id="ac" type="number" inputmode="numeric">
+                </div>
+
+                <div class="pairRow">
+                    <label>B + C</label>
+                    <input id="bc" type="number" inputmode="numeric">
+                </div>
+
+                <div class="abcSelector">
+                    <div class="selector active" data-base="A">A</div>
+                    <div class="selector" data-base="B">B</div>
+                    <div class="selector" data-base="C">C</div>
+                </div>
+
+                <div class="pairRow">
+                    <label id="pairD">A + D</label>
+                    <input id="ad" type="number" inputmode="numeric">
+                </div>
+
+                <div class="pairRow">
+                    <label id="pairE">A + E</label>
+                    <input id="ae" type="number" inputmode="numeric">
+                </div>
+
+                <div class="pairRow">
+                    <label id="pairF">A + F</label>
+                    <input id="af" type="number" inputmode="numeric">
+                </div>
+
+                <div class="pairRow">
+                    <label id="pairG">A + G</label>
+                    <input id="ag" type="number" inputmode="numeric">
+                </div>
+
+                <div class="pairRow">
+                    <label id="pairH">A + H</label>
+                    <input id="ah" type="number" inputmode="numeric">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN - Target Matches & Values -->
+        <div class="factual-right">
+
+            <div class="card target-matches-card">
+                <h3>Target Matches</h3>
+                <textarea id="matches" readonly></textarea>
+            </div>
+
+            <div class="card values-card">
+                <h3>Values</h3>
+                <div class="valuesGrid">
+                    <div>A = <span id="valueA">?</span></div>
+                    <div>B = <span id="valueB">?</span></div>
+                    <div>C = <span id="valueC">?</span></div>
+                    <div>D = <span id="valueD">?</span></div>
+                    <div>E = <span id="valueE">?</span></div>
+                    <div>F = <span id="valueF">?</span></div>
+                    <div>G = <span id="valueG">?</span></div>
+                    <div>H = <span id="valueH">?</span></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Button Row - Below both columns -->
+    <div class="buttonRow">
+        <button id="undoFactual">Undo</button>
+        <button id="clear">Clear</button>
+        <button id="resetFactual">Reset</button>
+    </div>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
